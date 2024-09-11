@@ -65,13 +65,13 @@ let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
-let Laufzeit = 0
-let Temperatur = 0
-let Luftdruck = 0
-let Luftfeuchte = 0
-let Lichtstaerke = 0
-let Ultraviolett = 0
 let Infrarot = 0
+let Ultraviolett = 0
+let Lichtstaerke = 0
+let Luftfeuchte = 0
+let Luftdruck = 0
+let Temperatur = 0
+let Laufzeit = 0
 radio.setGroup(1)
 VEML6070.Init()
 BME280.Address(BME280_I2C_ADDRESS.ADDR_0x76)
@@ -79,8 +79,8 @@ BME280.PowerOn()
 NEO6M_GPS.initGPS(SerialPin.C17, SerialPin.C16, BaudRate.BaudRate9600)
 NEO6M_GPS.setGPSFormat(GPS_Format.DEG_DEC)
 initFlightMode()
-Qwiic_Openlog.createFile("SondeV3")
-Qwiic_Openlog.openFile("SondeV3")
+Qwiic_Openlog.createFile("SondeV3.log")
+Qwiic_Openlog.openFile("SondeV3.log")
 let Arbeiten = true
 for (let Warten = 0; Warten <= 9; Warten++) {
     basic.showNumber(9 - Warten)

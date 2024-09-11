@@ -8,13 +8,13 @@
         "v1": "*",
         "BME280": "github:makecode-extensions/bme280#v1.1.0",
         "Sunlightsensor-SI1145": "github:calliope-edu/pxt-sunlightsensor-si1145#bad5c8770fa190d7dc5a85844f35b7ea6ef4a986",
-        "pxt-veml6070": "github:CalliTGS3/pxt-veml6070#abfb211b870feeadd265ba7791083f086c1c3c81"
+        "pxt-veml6070": "github:callitgs3/pxt-veml6070#378f0e55a6719818e41d87d05ef9993d87e652b9",
+        "pxt-pct2075": "github:CalliTGS3/pxt-pct2075#f5d7e91d1224ae351faaf1688be37e7869fdc5fa"
     },
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md",
-        "pxt-pct2075.ts"
+        "README.md"
     ],
     "testFiles": [
         "test.ts"
@@ -26,5 +26,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "tsprj"
+    "preferredEditor": "blocksprj"
 }
