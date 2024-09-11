@@ -17,7 +17,7 @@ function Messen () {
     Breite = NEO6M_GPS.getGPSLatitude()
     Laenge = NEO6M_GPS.getGPSLongitude()
     Hoehe = NEO6M_GPS.getAltitude()
-    Temperatur = BME280.temperature(BME280_T.T_C)
+    Temperatur = PCT2075.getTemp()
     Luftdruck = BME280.pressure(BME280_P.Pa)
     Luftfeuchte = BME280.humidity()
     Lichtstaerke = SI1145.readLight()
