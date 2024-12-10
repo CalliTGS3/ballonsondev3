@@ -7,7 +7,6 @@
         "funk": "*",
         "pxt-calliope-sparkfunqwiicopenlog": "github:callitgs3/pxt-calliope-sparkfunqwiicopenlog#a5ac795c4242bc9aa2152109c950a449ed306399",
         "pxt-calliope-neo-6m": "github:CalliTGS3/pxt-calliope-NEO-6M#a5075286145cd5d1edc3dabccc66ddde4dc20908",
-        "v1": "*",
         "BME280": "github:makecode-extensions/bme280#v1.1.0",
         "Sunlightsensor-SI1145": "github:calliope-edu/pxt-sunlightsensor-si1145#bad5c8770fa190d7dc5a85844f35b7ea6ef4a986",
         "pxt-veml6070": "github:callitgs3/pxt-veml6070#378f0e55a6719818e41d87d05ef9993d87e652b9",
