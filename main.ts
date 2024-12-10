@@ -10,6 +10,7 @@ function Senden () {
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
     radio.sendString("IR:" + Infrarot)
+    radio.sendString("PS" + LeistungSolar)
 }
 function Messen () {
     Laufzeit = input.runningTime() / 1000
@@ -23,6 +24,7 @@ function Messen () {
     Lichtstaerke = SI1145.readLight()
     Ultraviolett = VEML6070.getUVI()
     Infrarot = SI1145.readInfraRed()
+    LeistungSolar = ina219.getPowerW()
 }
 function initFlightMode () {
     let buf: Buffer = pins.createBuffer(44);
@@ -59,28 +61,32 @@ function Speichern () {
     Qwiic_Openlog.writeString(";" + Luftfeuchte.toString())
     Qwiic_Openlog.writeString(";" + Lichtstaerke.toString())
     Qwiic_Openlog.writeString(";" + Ultraviolett.toString())
-    Qwiic_Openlog.writeLine(";" + Infrarot.toString())
+    Qwiic_Openlog.writeString(";" + Infrarot.toString())
+    Qwiic_Openlog.writeLine(";" + LeistungSolar.toString())
 }
 let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
-let Infrarot = 0
-let Ultraviolett = 0
-let Lichtstaerke = 0
-let Luftfeuchte = 0
-let Luftdruck = 0
-let Temperatur = 0
 let Laufzeit = 0
+let Temperatur = 0
+let Luftdruck = 0
+let Luftfeuchte = 0
+let Lichtstaerke = 0
+let Ultraviolett = 0
+let Infrarot = 0
+let LeistungSolar = 0
 radio.setGroup(1)
+ina219.init(INA219ADDR.X40)
+ina219.setCalibration(Gain.DIV_1_40MV)
 VEML6070.Init()
 BME280.Address(BME280_I2C_ADDRESS.ADDR_0x76)
 BME280.PowerOn()
 NEO6M_GPS.initGPS(SerialPin.C17, SerialPin.C16, BaudRate.BaudRate9600)
 NEO6M_GPS.setGPSFormat(GPS_Format.DEG_DEC)
 initFlightMode()
-Qwiic_Openlog.createFile("SondeV3.log")
-Qwiic_Openlog.openFile("SondeV3.log")
+Qwiic_Openlog.createFile("SondeV4.log")
+Qwiic_Openlog.openFile("SondeV4.log")
 let Arbeiten = true
 for (let Warten = 0; Warten <= 9; Warten++) {
     basic.showNumber(9 - Warten)
@@ -88,7 +94,7 @@ for (let Warten = 0; Warten <= 9; Warten++) {
 }
 Qwiic_Openlog.writeString("Laufzeit;Uhrzeit;Laenge;Breite;Hoehe;")
 Qwiic_Openlog.writeString("Temperatur;Luftdruck;Luftfeuchte;")
-Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;Infrarot")
+Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;Infrarot;LeistungSolar")
 while (true) {
     if (Arbeiten) {
         Messen()

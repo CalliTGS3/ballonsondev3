@@ -14,13 +14,14 @@
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "ina219.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.41",
+        "target": "7.0.3",
         "targetId": "calliopemini"
     },
     "supportedTargets": [
