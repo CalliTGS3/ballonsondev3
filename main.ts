@@ -10,7 +10,7 @@ function Senden () {
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
     radio.sendString("IR:" + Infrarot)
-    radio.sendString("PS" + LeistungSolar)
+    radio.sendString("PS:" + LeistungSolar)
 }
 function Messen () {
     Laufzeit = input.runningTime() / 1000
@@ -68,14 +68,14 @@ let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
-let Laufzeit = 0
-let Temperatur = 0
-let Luftdruck = 0
-let Luftfeuchte = 0
-let Lichtstaerke = 0
-let Ultraviolett = 0
-let Infrarot = 0
 let LeistungSolar = 0
+let Infrarot = 0
+let Ultraviolett = 0
+let Lichtstaerke = 0
+let Luftfeuchte = 0
+let Luftdruck = 0
+let Temperatur = 0
+let Laufzeit = 0
 radio.setGroup(1)
 ina219.init(INA219ADDR.X40)
 ina219.setCalibration(Gain.DIV_1_40MV)
