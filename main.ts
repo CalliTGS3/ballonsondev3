@@ -10,7 +10,7 @@ function Senden () {
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
     radio.sendString("IR:" + Infrarot)
-    radio.sendString("PS:" + LeistungSolar)
+    radio.sendString("PS" + LeistungSolar)
 }
 function Messen () {
     Laufzeit = input.runningTime() / 1000
