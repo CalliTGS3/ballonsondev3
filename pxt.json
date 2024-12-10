@@ -3,6 +3,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
+        "v1": "*",
         "pxt-calliope-sparkfunqwiicopenlog": "github:callitgs3/pxt-calliope-sparkfunqwiicopenlog#a5ac795c4242bc9aa2152109c950a449ed306399",
         "pxt-calliope-neo-6m": "github:CalliTGS3/pxt-calliope-NEO-6M#a5075286145cd5d1edc3dabccc66ddde4dc20908",
         "v1": "*",
