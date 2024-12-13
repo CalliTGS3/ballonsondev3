@@ -5,10 +5,12 @@ function Senden () {
     radio.sendString("BR:" + Breite)
     radio.sendString("HO:" + Hoehe)
     radio.sendString("TE:" + Temperatur)
+    radio.sendString("T2:" + Temperatur2)
     radio.sendString("LU:" + Luftdruck)
     radio.sendString("LF:" + Luftfeuchte)
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
+    radio.sendString("U2:" + Ultraviolett)
     radio.sendString("IR:" + Infrarot)
     radio.sendString("PS:" + LeistungSolar)
 }
@@ -18,11 +20,13 @@ function Messen () {
     Breite = NEO6M_GPS.getGPSLatitude()
     Laenge = NEO6M_GPS.getGPSLongitude()
     Hoehe = NEO6M_GPS.getAltitude()
-    Temperatur = PCT2075.getTemp()
+    Temperatur = BME280.temperature(BME280_T.T_C)
+    Temperatur2 = PCT2075.getTemp()
     Luftdruck = BME280.pressure(BME280_P.Pa)
     Luftfeuchte = BME280.humidity()
     Lichtstaerke = SI1145.readLight()
-    Ultraviolett = VEML6070.getUVI()
+    Ultraviolett = SI1145.readUltraVioletIndex()
+    Ultraviolett2 = VEML6070.getUVI()
     Infrarot = SI1145.readInfraRed()
     LeistungSolar = ina219.getPowerW()
 }
@@ -30,8 +34,8 @@ function LogdateiOeffnen (Dateiname: string) {
     Qwiic_Openlog.createFile("Dateiname")
     Qwiic_Openlog.openFile("Dateiname")
     Qwiic_Openlog.writeString("Laufzeit;Uhrzeit;Laenge;Breite;Hoehe;")
-    Qwiic_Openlog.writeString("Temperatur;Luftdruck;Luftfeuchte;")
-    Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;Infrarot;LeistungSolar")
+    Qwiic_Openlog.writeString("Temperatur;T2;Luftdruck;Luftfeuchte;")
+    Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;UV2;Infrarot;Solar")
 }
 function Grundeinstellungen () {
     LeistungSolar = 0
@@ -101,10 +105,12 @@ function Speichern () {
     Qwiic_Openlog.writeString(";" + Breite)
     Qwiic_Openlog.writeString(";" + Hoehe)
     Qwiic_Openlog.writeString(";" + Temperatur.toString())
+    Qwiic_Openlog.writeString(";" + Temperatur2.toString())
     Qwiic_Openlog.writeString(";" + Luftdruck.toString())
     Qwiic_Openlog.writeString(";" + Luftfeuchte.toString())
     Qwiic_Openlog.writeString(";" + Lichtstaerke.toString())
     Qwiic_Openlog.writeString(";" + Ultraviolett.toString())
+    Qwiic_Openlog.writeString(";" + Ultraviolett2.toString())
     Qwiic_Openlog.writeString(";" + Infrarot.toString())
     Qwiic_Openlog.writeLine(";" + LeistungSolar.toString())
 }
@@ -112,14 +118,16 @@ let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
-let Laufzeit = 0
-let Temperatur = 0
-let Luftdruck = 0
-let Luftfeuchte = 0
-let Lichtstaerke = 0
-let Ultraviolett = 0
-let Infrarot = 0
 let LeistungSolar = 0
+let Infrarot = 0
+let Ultraviolett = 0
+let Lichtstaerke = 0
+let Luftfeuchte = 0
+let Luftdruck = 0
+let Temperatur = 0
+let Laufzeit = 0
+let Temperatur2 = 0
+let Ultraviolett2 = 0
 Grundeinstellungen()
 Countdown()
 LogdateiOeffnen("SondeV5.log")
