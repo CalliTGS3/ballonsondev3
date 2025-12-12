@@ -4,13 +4,13 @@
     "dependencies": {
         "core": "*",
         "v1": "*",
-        "funk": "*",
-        "pxt-calliope-sparkfunqwiicopenlog": "github:callitgs3/pxt-calliope-sparkfunqwiicopenlog#755a028cda8039986bc086975de933aed8c45b38",
-        "pxt-calliope-neo-6m": "github:callitgs3/pxt-calliope-neo-6m#a5075286145cd5d1edc3dabccc66ddde4dc20908",
+        "pxt-calliope-sparkfunqwiicopenlog": "github:callitgs3/pxt-calliope-sparkfunqwiicopenlog#a5ac795c4242bc9aa2152109c950a449ed306399",
+        "pxt-calliope-neo-6m": "github:CalliTGS3/pxt-calliope-NEO-6M#a5075286145cd5d1edc3dabccc66ddde4dc20908",
         "BME280": "github:makecode-extensions/bme280#v1.1.0",
         "Sunlightsensor-SI1145": "github:calliope-edu/pxt-sunlightsensor-si1145#bad5c8770fa190d7dc5a85844f35b7ea6ef4a986",
         "pxt-veml6070": "github:callitgs3/pxt-veml6070#378f0e55a6719818e41d87d05ef9993d87e652b9",
-        "pxt-pct2075": "github:CalliTGS3/pxt-pct2075#f5d7e91d1224ae351faaf1688be37e7869fdc5fa"
+        "pxt-pct2075": "github:CalliTGS3/pxt-pct2075#f5d7e91d1224ae351faaf1688be37e7869fdc5fa",
+        "funk": "*"
     },
     "files": [
         "main.blocks",
@@ -22,7 +22,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "7.0.3",
+        "target": "8.1.11",
         "targetId": "calliopemini"
     },
     "supportedTargets": [

@@ -10,7 +10,7 @@ function Senden () {
     radio.sendString("LF:" + Luftfeuchte)
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
-    radio.sendString("U2:" + Ultraviolett)
+    radio.sendString("U2:" + Ultraviolett2)
     radio.sendString("IR:" + Infrarot)
     radio.sendString("PS:" + LeistungSolar)
 }
@@ -31,8 +31,8 @@ function Messen () {
     LeistungSolar = ina219.getPowerW()
 }
 function LogdateiOeffnen (Dateiname: string) {
-    Qwiic_Openlog.createFile("Dateiname")
-    Qwiic_Openlog.openFile("Dateiname")
+    Qwiic_Openlog.createFile(Dateiname)
+    Qwiic_Openlog.openFile(Dateiname)
     Qwiic_Openlog.writeString("Laufzeit;Uhrzeit;Laenge;Breite;Hoehe;")
     Qwiic_Openlog.writeString("Temperatur;T2;Luftdruck;Luftfeuchte;")
     Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;UV2;Infrarot;Solar")
@@ -118,16 +118,16 @@ let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
-let LeistungSolar = 0
-let Infrarot = 0
-let Ultraviolett = 0
-let Lichtstaerke = 0
-let Luftfeuchte = 0
-let Luftdruck = 0
-let Temperatur = 0
-let Laufzeit = 0
-let Temperatur2 = 0
 let Ultraviolett2 = 0
+let Temperatur2 = 0
+let Laufzeit = 0
+let Temperatur = 0
+let Luftdruck = 0
+let Luftfeuchte = 0
+let Lichtstaerke = 0
+let Ultraviolett = 0
+let Infrarot = 0
+let LeistungSolar = 0
 Grundeinstellungen()
 Countdown()
 LogdateiOeffnen("SondeV5.log")
