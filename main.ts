@@ -5,10 +5,12 @@ function Senden () {
     radio.sendString("BR:" + Breite)
     radio.sendString("HO:" + Hoehe)
     radio.sendString("TE:" + Temperatur)
+    radio.sendString("T2:" + Temperatur2)
     radio.sendString("LU:" + Luftdruck)
     radio.sendString("LF:" + Luftfeuchte)
     radio.sendString("LI:" + Lichtstaerke)
     radio.sendString("UV:" + Ultraviolett)
+    radio.sendString("U2:" + Ultraviolett2)
     radio.sendString("IR:" + Infrarot)
     radio.sendString("PS:" + LeistungSolar)
 }
@@ -18,13 +20,53 @@ function Messen () {
     Breite = NEO6M_GPS.getGPSLatitude()
     Laenge = NEO6M_GPS.getGPSLongitude()
     Hoehe = NEO6M_GPS.getAltitude()
-    Temperatur = PCT2075.getTemp()
+    Temperatur = BME280.temperature(BME280_T.T_C)
+    Temperatur2 = PCT2075.getTemp()
     Luftdruck = BME280.pressure(BME280_P.Pa)
     Luftfeuchte = BME280.humidity()
     Lichtstaerke = SI1145.readLight()
-    Ultraviolett = VEML6070.getUVI()
+    Ultraviolett = SI1145.readUltraVioletIndex()
+    Ultraviolett2 = VEML6070.getUVI()
     Infrarot = SI1145.readInfraRed()
     LeistungSolar = ina219.getPowerW()
+}
+function LogdateiOeffnen (Dateiname: string) {
+    Qwiic_Openlog.createFile(Dateiname)
+    Qwiic_Openlog.openFile(Dateiname)
+    Qwiic_Openlog.writeString("Laufzeit;Uhrzeit;Laenge;Breite;Hoehe;")
+    Qwiic_Openlog.writeString("Temperatur;T2;Luftdruck;Luftfeuchte;")
+    Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;UV2;Infrarot;Solar")
+}
+function Grundeinstellungen () {
+    LeistungSolar = 0
+    Infrarot = 0
+    Ultraviolett = 0
+    Lichtstaerke = 0
+    Luftfeuchte = 0
+    Luftdruck = 0
+    Temperatur = 0
+    Laufzeit = 0
+    radio.setGroup(1)
+    ina219.init(INA219ADDR.X40)
+    ina219.setCalibration(Gain.DIV_1_40MV)
+    VEML6070.Init()
+    BME280.Address(BME280_I2C_ADDRESS.ADDR_0x76)
+    BME280.PowerOn()
+    NEO6M_GPS.initGPS(SerialPin.C17, SerialPin.C16, BaudRate.BaudRate9600)
+    NEO6M_GPS.setGPSFormat(GPS_Format.DEG_DEC)
+    initFlightMode()
+}
+function Blinken () {
+    basic.pause(800)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . # . .
+        . . . . .
+        . . . . .
+        `)
+    basic.pause(200)
+    basic.clearScreen()
 }
 function initFlightMode () {
     let buf: Buffer = pins.createBuffer(44);
@@ -50,6 +92,12 @@ buf[0] = 181
     buf[43] = 220
     NEO6M_GPS.writeConfig(buf, 44)
 }
+function Countdown () {
+    for (let Warten = 0; Warten <= 9; Warten++) {
+        basic.showNumber(9 - Warten)
+        basic.pause(1000)
+    }
+}
 function Speichern () {
     Qwiic_Openlog.writeString(Laufzeit.toString())
     Qwiic_Openlog.writeString(";" + Uhrzeit.substr(0, 6))
@@ -57,10 +105,12 @@ function Speichern () {
     Qwiic_Openlog.writeString(";" + Breite)
     Qwiic_Openlog.writeString(";" + Hoehe)
     Qwiic_Openlog.writeString(";" + Temperatur.toString())
+    Qwiic_Openlog.writeString(";" + Temperatur2.toString())
     Qwiic_Openlog.writeString(";" + Luftdruck.toString())
     Qwiic_Openlog.writeString(";" + Luftfeuchte.toString())
     Qwiic_Openlog.writeString(";" + Lichtstaerke.toString())
     Qwiic_Openlog.writeString(";" + Ultraviolett.toString())
+    Qwiic_Openlog.writeString(";" + Ultraviolett2.toString())
     Qwiic_Openlog.writeString(";" + Infrarot.toString())
     Qwiic_Openlog.writeLine(";" + LeistungSolar.toString())
 }
@@ -68,6 +118,8 @@ let Hoehe = ""
 let Breite = ""
 let Laenge = ""
 let Uhrzeit = ""
+let Ultraviolett2 = 0
+let Temperatur2 = 0
 let Laufzeit = 0
 let Temperatur = 0
 let Luftdruck = 0
@@ -76,39 +128,12 @@ let Lichtstaerke = 0
 let Ultraviolett = 0
 let Infrarot = 0
 let LeistungSolar = 0
-radio.setGroup(1)
-ina219.init(INA219ADDR.X40)
-ina219.setCalibration(Gain.DIV_1_40MV)
-VEML6070.Init()
-BME280.Address(BME280_I2C_ADDRESS.ADDR_0x76)
-BME280.PowerOn()
-NEO6M_GPS.initGPS(SerialPin.C17, SerialPin.C16, BaudRate.BaudRate9600)
-NEO6M_GPS.setGPSFormat(GPS_Format.DEG_DEC)
-initFlightMode()
-Qwiic_Openlog.createFile("SondeV4.log")
-Qwiic_Openlog.openFile("SondeV4.log")
-let Arbeiten = true
-for (let Warten = 0; Warten <= 9; Warten++) {
-    basic.showNumber(9 - Warten)
-    basic.pause(1000)
-}
-Qwiic_Openlog.writeString("Laufzeit;Uhrzeit;Laenge;Breite;Hoehe;")
-Qwiic_Openlog.writeString("Temperatur;Luftdruck;Luftfeuchte;")
-Qwiic_Openlog.writeLine("Helligkeit;Ultraviolett;Infrarot;LeistungSolar")
+Grundeinstellungen()
+Countdown()
+LogdateiOeffnen("SondeV5.log")
 while (true) {
-    if (Arbeiten) {
-        Messen()
-        Speichern()
-        Senden()
-        basic.pause(800)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . # . .
-            . . . . .
-            . . . . .
-            `)
-        basic.pause(200)
-        basic.clearScreen()
-    }
+    Messen()
+    Speichern()
+    Senden()
+    Blinken()
 }
