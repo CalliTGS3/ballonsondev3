@@ -49,6 +49,7 @@ function Grundeinstellungen () {
     radio.setGroup(1)
     ina219.init(INA219ADDR.X40)
     ina219.setCalibration(Gain.DIV_1_40MV)
+    SI1145.init()
     VEML6070.Init()
     BME280.Address(BME280_I2C_ADDRESS.ADDR_0x76)
     BME280.PowerOn()
