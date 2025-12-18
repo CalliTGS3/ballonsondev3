@@ -131,7 +131,7 @@ let Infrarot = 0
 let LeistungSolar = 0
 Grundeinstellungen()
 Countdown()
-LogdateiOeffnen("SondeV5.log")
+LogdateiOeffnen("SondeV6.log")
 while (true) {
     Messen()
     Speichern()
