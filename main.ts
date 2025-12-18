@@ -95,8 +95,16 @@ buf[0] = 181
 }
 function Countdown () {
     for (let Warten = 0; Warten <= 9; Warten++) {
-        basic.showNumber(9 - Warten)
-        basic.pause(1000)
+        basic.pause(800)
+        basic.showLeds(`
+            # # # # #
+            # . . . #
+            # . # . #
+            # . . . #
+            # # # # #
+            `)
+        basic.pause(200)
+        basic.clearScreen()
     }
 }
 function Speichern () {
